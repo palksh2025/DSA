@@ -15,24 +15,21 @@ public:
             return nullptr;
         }
 
-        vector<int> temp;
-
-        ListNode* mover = head;
-        while(mover != nullptr){
-            temp.push_back(mover->val);
-            mover = mover->next;
-        }
-
-        int n = temp.size();
-
-        ListNode* head1 = new ListNode();
-        ListNode* temp1 = head1;
+        ListNode* prev = nullptr;
+        ListNode* curr = head;
+        ListNode* next = curr->next;
         
-        for(int i = n-1; i >= 0; i--){
-            temp1->next = new ListNode(temp[i]);
-            temp1 = temp1 -> next;
+        while(curr != nullptr){
+            curr -> next = prev;
+            prev = curr;
+            curr = next;
+            
+            if(curr == nullptr){
+                break;
+            }
+            next = curr->next;
         }
 
-        return head1->next;
+        return prev;
     }
 };
