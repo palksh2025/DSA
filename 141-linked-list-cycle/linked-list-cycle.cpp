@@ -16,17 +16,16 @@ public:
             return false;
         }
 
-        vector<ListNode*> address;
-        ListNode* temp = head;
+        ListNode* fast = head;
+        ListNode* slow = head;
 
-        while(temp){
-            if (find(address.begin(), address.end(), temp) == address.end()){
-                address.push_back(temp);
-            }
-            else{
+        while(fast != nullptr && fast->next != nullptr){
+            slow = slow->next;
+            fast = fast->next->next;
+
+            if(slow == fast){
                 return true;
             }
-            temp = temp->next;
         }
 
         return false;
