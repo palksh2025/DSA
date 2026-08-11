@@ -4,27 +4,39 @@ public:
         int n1 = nums1.size();
         int n2 = nums2.size();
 
+        unordered_map<int, int> mp;
+        stack<int> st; 
+
+        for(int i = n2 - 1; i >= 0; i--){
+            if(st.empty()){
+                mp[nums2[i]] = -1;
+                st.push(nums2[i]);
+            }
+            else{
+                int flag = 0;
+                
+                while(st.top() <= nums2[i]){
+                    st.pop();
+                    
+                    if(st.empty()){
+                        mp[nums2[i]] = -1;
+                        flag = 1;
+                        break;
+                    }
+                }
+
+                if(flag == 0){
+                    mp[nums2[i]] = st.top();
+                }
+
+                st.push(nums2[i]);
+            }
+        }
+
         vector<int> out;
 
-        for(int i = 0 ; i < n1; i++){
-            int j = 0;
-            while(nums1[i] != nums2[j]){
-                j++;
-            }
-            
-
-            int flag = 0;
-            for(int k = j+1; k < n2; k++){
-                if(nums2[k] > nums2[j]){
-                    out.push_back(nums2[k]);
-                    flag = 1;
-                    break;
-                }
-            }
-
-            if(flag == 0){
-                out.push_back(-1);
-            }
+        for(int i = 0; i < n1; i++){
+            out.push_back(mp[nums1[i]]);
         }
 
         return out;
